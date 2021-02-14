@@ -24,13 +24,13 @@ public class Book {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToOne(targetEntity = Author.class, cascade = CascadeType.ALL)
+    @OneToOne(targetEntity = Author.class, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_author")
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 5)
     private Author author;
 
-    @OneToOne(targetEntity = Genre.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = Genre.class, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_genre")
     private Genre genre;
 

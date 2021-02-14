@@ -1,7 +1,10 @@
 package ru.otus.jdbcprj.shell;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
+import ru.otus.jdbcprj.dao.BookRepository;
+import ru.otus.jdbcprj.dao.CommentRepository;
 import ru.otus.jdbcprj.model.Author;
 import ru.otus.jdbcprj.model.Book;
 import ru.otus.jdbcprj.model.Comment;
@@ -89,8 +92,9 @@ public class ShellCommands {
 
     @ShellMethod(value = "Add comment", key = {"ac", "add"})
     public String addComment(String bookId, String text) {
+        long id = Long.valueOf(bookId);
         Book book = new Book();
-        book.setId(Long.valueOf(bookId));
+        book.setId(id);
         Comment comment = new Comment(0L, book, text);
         return commentService.save(comment).toString();
     }

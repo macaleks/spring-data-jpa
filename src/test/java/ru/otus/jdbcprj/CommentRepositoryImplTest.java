@@ -6,8 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import ru.otus.jdbcprj.dao.CommentRepositoryJpa;
-import ru.otus.jdbcprj.dao.CommentRepositoryJpaImpl;
+import ru.otus.jdbcprj.dao.CommentRepository;
 import ru.otus.jdbcprj.model.Book;
 import ru.otus.jdbcprj.model.Comment;
 
@@ -17,15 +16,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@Import(CommentRepositoryJpaImpl.class)
-public class CommentRepositoryJpaImplTest {
+@Import(CommentRepository.class)
+public class CommentRepositoryImplTest {
 
     private static final int EXPECTED_NUMBER_OF_COMMENTS = 1;
     private static final long BOOK_ID = 2;
     private static final String COMMENT = "Nice to have";
 
     @Autowired
-    CommentRepositoryJpa repo;
+    CommentRepository repo;
 
     @DisplayName("Find comments by book")
     @Test

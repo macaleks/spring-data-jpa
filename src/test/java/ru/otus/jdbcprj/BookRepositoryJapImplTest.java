@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
-import ru.otus.jdbcprj.dao.BookRepositoryJpa;
-import ru.otus.jdbcprj.dao.BookRepositoryJpaImpl;
+import ru.otus.jdbcprj.dao.BookRepository;
 import ru.otus.jdbcprj.model.Author;
 import ru.otus.jdbcprj.model.Book;
 import ru.otus.jdbcprj.model.Genre;
@@ -19,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@Import({BookRepositoryJpaImpl.class})
+@Import({BookRepository.class})
 public class BookRepositoryJapImplTest {
 
     private static final int EXPECTED_NUMBER_OF_BOOKS = 3;
@@ -29,7 +28,7 @@ public class BookRepositoryJapImplTest {
     private static final String BOOK_NAME = "New book";
 
     @Autowired
-    BookRepositoryJpa bookRepo;
+    BookRepository bookRepo;
 
     @Autowired
     TestEntityManager em;
@@ -37,7 +36,7 @@ public class BookRepositoryJapImplTest {
     @DisplayName("Should return 3 records")
     @Test
     public void test_getAll() {
-        List<Book> books = bookRepo.getAll();
+        List<Book> books = bookRepo.findAll();
         assertEquals(EXPECTED_NUMBER_OF_BOOKS, books.size());
     }
 

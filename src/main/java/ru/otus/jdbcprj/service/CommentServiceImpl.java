@@ -2,7 +2,7 @@ package ru.otus.jdbcprj.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.otus.jdbcprj.dao.CommentRepositoryJpa;
+import ru.otus.jdbcprj.dao.CommentRepository;
 import ru.otus.jdbcprj.model.Comment;
 
 import javax.transaction.Transactional;
@@ -11,10 +11,10 @@ import java.util.List;
 @Service
 public class CommentServiceImpl implements CommentService {
 
-    @Autowired
-    private final CommentRepositoryJpa repo;
+    private final CommentRepository repo;
 
-    public CommentServiceImpl(CommentRepositoryJpa repo) {
+    @Autowired
+    public CommentServiceImpl(CommentRepository repo) {
         this.repo = repo;
     }
 
@@ -26,6 +26,6 @@ public class CommentServiceImpl implements CommentService {
     @Transactional
     @Override
     public Comment save(Comment comment) {
-        return repo.save(comment);
+        return repo.addComment(comment);
     }
 }

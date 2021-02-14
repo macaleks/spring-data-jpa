@@ -1,7 +1,7 @@
 package ru.otus.jdbcprj.service;
 
 import org.springframework.stereotype.Service;
-import ru.otus.jdbcprj.dao.BookRepositoryJpa;
+import ru.otus.jdbcprj.dao.BookRepository;
 import ru.otus.jdbcprj.model.Book;
 
 import javax.transaction.Transactional;
@@ -10,21 +10,21 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
 
-    BookRepositoryJpa repo;
+    BookRepository repo;
 
-    public BookServiceImpl(BookRepositoryJpa bookDao) {
+    public BookServiceImpl(BookRepository bookDao) {
         this.repo = bookDao;
     }
 
     @Override
     public List<Book> getAll() {
-        return repo.getAll();
+        return repo.findAll();
     }
 
     @Transactional
     @Override
     public Book save(Book book) {
-        return repo.save(book);
+        return repo.create(book);
     }
 
     @Transactional
@@ -37,6 +37,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public void updateNameById(long id, String name) {
         repo.updateNameById(id, name);
+    }
+
+    @Override
+    public Book getById(long id) {
+        return repo.findById(id);
     }
 
 

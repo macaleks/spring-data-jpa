@@ -13,4 +13,6 @@ public interface BookService {
     void deleteById(long id);
 
     void updateNameById(long id, String name);
+
+    Book getById(long id);
 }
