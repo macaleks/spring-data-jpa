@@ -5,7 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
+import ru.otus.jdbcprj.dao.BookRepository;
 import ru.otus.jdbcprj.dao.CommentRepository;
 import ru.otus.jdbcprj.model.Book;
 import ru.otus.jdbcprj.model.Comment;
@@ -23,22 +23,23 @@ public class CommentRepositoryImplTest {
     private static final String COMMENT = "Nice to have";
 
     @Autowired
-    CommentRepository repo;
+    CommentRepository commentRepository;
+    @Autowired
+    BookRepository bookRepository;
 
     @DisplayName("Find comments by book")
     @Test
     public void test_findComments() {
-        List<Comment> comments = repo.findByBookId(BOOK_ID);
+        List<Comment> comments = commentRepository.findByBookId(BOOK_ID);
         assertEquals(EXPECTED_NUMBER_OF_COMMENTS, comments.size());
     }
 
     @DisplayName("Add a new comment for a book")
     @Test
     public void test_insert() {
-        Book book = new Book();
-        book.setId(BOOK_ID);
+        Book book = bookRepository.findById(BOOK_ID);
         Comment comment = new Comment(0L, book, COMMENT);
-        Comment savedComment = repo.save(comment);
+        Comment savedComment = commentRepository.save(comment);
 
         assertThat(savedComment).isNotNull();
         assertThat(savedComment.getId()).isGreaterThan(0);

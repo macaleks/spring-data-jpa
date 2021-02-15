@@ -73,10 +73,6 @@ public class ShellCommands {
     @ShellMethod(value = "Create a book", key = {"c", "create"})
     public Book createBook(String bookName, String authorId, String genreId) {
         Author author = authorService.getById(Long.valueOf(authorId));
-//        Author author = authorService.getAll().stream().filter(
-//                a -> a.getId() == Long.valueOf(authorId)
-//        ).findFirst().get();
-//Author author = authors.get(Long.valueOf(authorId))
         Genre genre = genreService.getById(Long.valueOf(genreId));
         Book book = new Book(0L, bookName, author, genre);
         return bookService.save(book);
