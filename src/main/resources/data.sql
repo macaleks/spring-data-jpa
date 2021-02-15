@@ -21,7 +21,6 @@ insert into genres(id, name) values (9, 'mystery');
 insert into books(id, name, id_author, id_genre) values (1, 'Good Omens', 1, 7);
 insert into books(id, name, id_author, id_genre) values (2, 'Heads You Lose', 4, 9);
 insert into books(id, name, id_author, id_genre) values (3, 'Between the Lines', 6, 1);
-insert into books(id, name, id_author, id_genre) values (4, 'Between the Lines 2', 6, 1);
 
 insert into comments(id, comment, id_book) values (1, 'Good', 1);
 insert into comments(id, comment, id_book) values (2, 'Nothing special', 2);

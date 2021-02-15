@@ -23,9 +23,8 @@ public class CommentServiceImpl implements CommentService {
         return repo.findByBookId(id);
     }
 
-    @Transactional
     @Override
     public Comment save(Comment comment) {
-        return repo.addComment(comment);
+        return repo.save(comment);
     }
 }

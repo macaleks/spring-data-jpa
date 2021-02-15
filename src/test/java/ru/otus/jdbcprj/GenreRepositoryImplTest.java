@@ -15,7 +15,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@Import(GenreRepository.class)
 public class GenreRepositoryImplTest {
 
     private static final int EXPECTED_NUMBER_OF_GENRES = 9;

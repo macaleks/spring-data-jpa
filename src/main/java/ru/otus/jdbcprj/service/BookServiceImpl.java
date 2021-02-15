@@ -21,19 +21,16 @@ public class BookServiceImpl implements BookService {
         return repo.findAll();
     }
 
-    @Transactional
     @Override
     public Book save(Book book) {
-        return repo.create(book);
+        return repo.save(book);
     }
 
-    @Transactional
     @Override
     public void deleteById(long id) {
         repo.deleteById(id);
     }
 
-    @Transactional
     @Override
     public void updateNameById(long id, String name) {
         repo.updateNameById(id, name);

@@ -1,10 +1,7 @@
 package ru.otus.jdbcprj.shell;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import ru.otus.jdbcprj.dao.BookRepository;
-import ru.otus.jdbcprj.dao.CommentRepository;
 import ru.otus.jdbcprj.model.Author;
 import ru.otus.jdbcprj.model.Book;
 import ru.otus.jdbcprj.model.Comment;
@@ -15,6 +12,7 @@ import ru.otus.jdbcprj.service.CommentService;
 import ru.otus.jdbcprj.service.GenreService;
 
 import javax.annotation.PostConstruct;
+import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +20,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Transactional
 @ShellComponent
 public class ShellCommands {
 
@@ -72,9 +71,15 @@ public class ShellCommands {
     }
 
     @ShellMethod(value = "Create a book", key = {"c", "create"})
-    public void createBook(String bookName, String authorId, String genreId) {
-        Book book = new Book(0L, bookName, authors.get(Long.valueOf(authorId)), genres.get(Long.valueOf(genreId)));
-        bookService.save(book);
+    public Book createBook(String bookName, String authorId, String genreId) {
+        Author author = authorService.getById(Long.valueOf(authorId));
+//        Author author = authorService.getAll().stream().filter(
+//                a -> a.getId() == Long.valueOf(authorId)
+//        ).findFirst().get();
+//Author author = authors.get(Long.valueOf(authorId))
+        Genre genre = genreService.getById(Long.valueOf(genreId));
+        Book book = new Book(0L, bookName, author, genre);
+        return bookService.save(book);
     }
 
     @ShellMethod(value = "Update a book name", key = {"u", "update"})
@@ -93,8 +98,7 @@ public class ShellCommands {
     @ShellMethod(value = "Add comment", key = {"ac", "add"})
     public String addComment(String bookId, String text) {
         long id = Long.valueOf(bookId);
-        Book book = new Book();
-        book.setId(id);
+        Book book = bookService.getById(id);
         Comment comment = new Comment(0L, book, text);
         return commentService.save(comment).toString();
     }
@@ -102,9 +106,9 @@ public class ShellCommands {
     @PostConstruct
     private void init() {
         authors = authorService.getAll().stream()
-                .collect(Collectors.toMap(k -> k.getId(), Function.identity()));
+                .collect(Collectors.toMap(k -> k.getId(), a -> a));
         genres = genreService.getAll().stream()
-                .collect(Collectors.toMap(k -> k.getId(), Function.identity()));
+                .collect(Collectors.toMap(k -> k.getId(), g -> g));
         books = new HashMap<>();
     }
 
