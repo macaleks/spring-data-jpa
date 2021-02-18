@@ -1,11 +1,9 @@
 package ru.otus.jdbcprj.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ru.otus.jdbcprj.model.Genre;
 
-import java.util.List;
-
+@Repository
 public interface GenreRepository extends JpaRepository<Genre, Long> {
-
-    Genre findById(long id);
 }

@@ -80,12 +80,15 @@ public class ShellCommands {
 
     @ShellMethod(value = "Update a book name", key = {"u", "update"})
     public void updateBook(String id, String bookName) {
-        bookService.updateNameById(Long.valueOf(id), bookName);
+        Book book = bookService.getById(Long.valueOf(id));
+        book.setName(bookName);
+        bookService.updateNameById(book);
     }
 
     @ShellMethod(value = "List a book comments", key = {"lc", "list"})
     public String listBookComments(String bookId) {
-        List<Comment> comments = commentService.findByBookId(Long.valueOf(bookId));
+        Book book = bookService.getById(Long.valueOf(bookId));
+        List<Comment> comments = commentService.findByBook(book);
         return comments.stream()
                 .map(Comment::toString)
                 .collect(Collectors.joining("\n"));
@@ -102,9 +105,9 @@ public class ShellCommands {
     @PostConstruct
     private void init() {
         authors = authorService.getAll().stream()
-                .collect(Collectors.toMap(k -> k.getId(), a -> a));
+                .collect(Collectors.toMap(k -> k.getId(), Function.identity()));
         genres = genreService.getAll().stream()
-                .collect(Collectors.toMap(k -> k.getId(), g -> g));
+                .collect(Collectors.toMap(k -> k.getId(), Function.identity()));
         books = new HashMap<>();
     }
 

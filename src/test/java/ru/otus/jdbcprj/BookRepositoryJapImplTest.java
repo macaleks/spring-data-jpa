@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.context.annotation.Import;
 import ru.otus.jdbcprj.dao.AuthorRepository;
 import ru.otus.jdbcprj.dao.BookRepository;
 import ru.otus.jdbcprj.dao.GenreRepository;
@@ -50,8 +49,8 @@ public class BookRepositoryJapImplTest {
     @DisplayName("Check that a new record saved")
     @Test
     public void test_insert() {
-        Author author = authorRepository.findById(AUTHOR_ID);
-        Genre genre = genreRepository.findById(GENRE_ID);
+        Author author = authorRepository.findById(AUTHOR_ID).get();
+        Genre genre = genreRepository.findById(GENRE_ID).get();
         val book = new Book(0L, "Book name", author, genre);
         bookRepo.save(book);
         assertThat(book.getId()).isGreaterThan(0);
@@ -64,7 +63,9 @@ public class BookRepositoryJapImplTest {
         String oldName = book.getName();
         em.detach(book);
 
-        bookRepo.updateNameById(BOOK_ID, BOOK_NAME);
+        val bookToModify = bookRepo.findById(BOOK_ID).get();
+        bookToModify.setName(BOOK_NAME);
+        bookRepo.save(bookToModify);
         val updatedBook = em.find(Book.class, BOOK_ID);
 
         assertThat(updatedBook.getName()).isNotEqualTo(oldName).isEqualTo(BOOK_NAME);

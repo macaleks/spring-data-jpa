@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.otus.jdbcprj.dao.BookRepository;
 import ru.otus.jdbcprj.model.Book;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import java.util.List;
 
@@ -32,13 +34,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void updateNameById(long id, String name) {
-        repo.updateNameById(id, name);
+    public void updateNameById(Book book) {
+        repo.save(book);
     }
 
     @Override
     public Book getById(long id) {
-        return repo.findById(id);
+        return repo.findById(id).get();
     }
 
 

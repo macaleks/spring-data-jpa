@@ -30,14 +30,15 @@ public class CommentRepositoryImplTest {
     @DisplayName("Find comments by book")
     @Test
     public void test_findComments() {
-        List<Comment> comments = commentRepository.findByBookId(BOOK_ID);
+        Book book = bookRepository.findById(BOOK_ID).get();
+        List<Comment> comments = commentRepository.findByBook(book);
         assertEquals(EXPECTED_NUMBER_OF_COMMENTS, comments.size());
     }
 
     @DisplayName("Add a new comment for a book")
     @Test
     public void test_insert() {
-        Book book = bookRepository.findById(BOOK_ID);
+        Book book = bookRepository.findById(BOOK_ID).get();
         Comment comment = new Comment(0L, book, COMMENT);
         Comment savedComment = commentRepository.save(comment);
 

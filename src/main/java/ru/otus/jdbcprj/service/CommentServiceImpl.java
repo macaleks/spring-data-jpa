@@ -3,9 +3,9 @@ package ru.otus.jdbcprj.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.jdbcprj.dao.CommentRepository;
+import ru.otus.jdbcprj.model.Book;
 import ru.otus.jdbcprj.model.Comment;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -19,8 +19,8 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<Comment> findByBookId(long id) {
-        return repo.findByBookId(id);
+    public List<Comment> findByBook(Book book) {
+        return repo.findByBook(book);
     }
 
     @Override

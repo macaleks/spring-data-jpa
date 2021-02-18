@@ -33,7 +33,7 @@ public class AuthorRepositoryImplTest {
     @DisplayName("Find by id")
     @Test
     public void test_getById() {
-        Author author = repo.findById(AUTHOR_ID);
+        Author author = repo.findById(AUTHOR_ID).get();
         assertThat(author).isNotNull();
         assertEquals(AUTHOR_ID, author.getId());
     }

@@ -33,7 +33,7 @@ public class GenreRepositoryImplTest {
     @DisplayName("Find by id")
     @Test
     public void test_getById() {
-        Genre genre = repo.findById(GENRE_ID);
+        Genre genre = repo.findById(GENRE_ID).get();
         assertThat(genre).isNotNull();
         assertEquals(GENRE_ID, genre.getId());
     }
