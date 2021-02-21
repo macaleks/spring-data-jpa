@@ -42,7 +42,7 @@ public class Book {
     @JoinColumn(name = "id_genre")
     private Genre genre;
 
-    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_book")
     @Fetch(FetchMode.SELECT)
     @BatchSize(size = 5)
