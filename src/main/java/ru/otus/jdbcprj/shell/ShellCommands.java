@@ -88,7 +88,7 @@ public class ShellCommands {
     @ShellMethod(value = "List a book comments", key = {"lc", "list"})
     public String listBookComments(String bookId) {
         Book book = bookService.getById(Long.valueOf(bookId));
-        List<Comment> comments = commentService.findByBook(book);
+        List<Comment> comments = book.getComments();
         return comments.stream()
                 .map(Comment::toString)
                 .collect(Collectors.joining("\n"));

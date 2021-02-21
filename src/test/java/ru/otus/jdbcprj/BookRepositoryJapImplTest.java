@@ -8,9 +8,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import ru.otus.jdbcprj.dao.AuthorRepository;
 import ru.otus.jdbcprj.dao.BookRepository;
+import ru.otus.jdbcprj.dao.CommentRepository;
 import ru.otus.jdbcprj.dao.GenreRepository;
 import ru.otus.jdbcprj.model.Author;
 import ru.otus.jdbcprj.model.Book;
+import ru.otus.jdbcprj.model.Comment;
 import ru.otus.jdbcprj.model.Genre;
 
 import javax.transaction.Transactional;
@@ -35,6 +37,8 @@ public class BookRepositoryJapImplTest {
     AuthorRepository authorRepository;
     @Autowired
     GenreRepository genreRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
     @Autowired
     TestEntityManager em;
@@ -81,5 +85,13 @@ public class BookRepositoryJapImplTest {
         bookRepo.deleteById(BOOK_ID);
         val deletedBook = em.find(Book.class, BOOK_ID);
         assertThat(deletedBook).isNull();
+    }
+
+    @DisplayName("Retrieve comments by book")
+    @Test
+    public void test_getComments() {
+        val book = bookRepo.findById(BOOK_ID).get();
+        List<Comment> comments = book.getComments();
+        assertThat(comments.size()).isGreaterThan(0);
     }
 }

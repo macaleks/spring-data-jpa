@@ -4,15 +4,12 @@ import org.springframework.stereotype.Service;
 import ru.otus.jdbcprj.dao.BookRepository;
 import ru.otus.jdbcprj.model.Book;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 public class BookServiceImpl implements BookService {
 
-    BookRepository repo;
+    private final BookRepository repo;
 
     public BookServiceImpl(BookRepository bookDao) {
         this.repo = bookDao;
@@ -42,6 +39,5 @@ public class BookServiceImpl implements BookService {
     public Book getById(long id) {
         return repo.findById(id).get();
     }
-
 
 }
